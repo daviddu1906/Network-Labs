@@ -1,0 +1,191 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2026.06.14 16:38:49 =~=~=~=~=~=~=~=~=~=~=~=
+
+R3#
+R3#show run int e0/1
+Building configuration...
+
+Current configuration : 120 bytes
+!
+interface Ethernet0/1
+ ip address 10.10.10.1 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly in
+ duplex auto
+end
+
+R3#show run int e0/1 0
+Building configuration...
+
+Current configuration : 122 bytes
+!
+interface Ethernet0/0
+ ip address 115.1.1.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ duplex auto
+end
+
+R3#show ip int br
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                115.1.1.2       YES manual up                    up      
+Ethernet0/1                10.10.10.1      YES NVRAM  up                    up      
+Ethernet0/2                unassigned      YES NVRAM  administratively down down    
+Ethernet0/3                unassigned      YES NVRAM  administratively down down    
+NVI0                       10.10.10.1      YES unset  up                    up      
+R3#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is 115.1.1.1 to network 0.0.0.0
+
+S*    0.0.0.0/0 [1/0] via 115.1.1.1
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.10.10.0/24 is directly connected, Ethernet0/1
+L        10.10.10.1/32 is directly connected, Ethernet0/1
+      115.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        115.1.1.0/30 is directly connected, Ethernet0/0
+L        115.1.1.2/32 is directly connected, Ethernet0/0
+R3#
+R3#show runn
+Building configuration...
+
+Current configuration : 1277 bytes
+!
+! Last configuration change at 07:26:21 UTC Sun Jun 14 2026
+!
+version 15.7
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+ --More--         no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+ --More--         ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!
+ --More--         !
+!
+!
+!
+!
+!
+!
+interface Ethernet0/0
+ ip address 115.1.1.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ duplex auto
+!
+interface Ethernet0/1
+ ip address 10.10.10.1 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly in
+ duplex auto
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ --More--         !
+interface Ethernet0/3
+ no ip address
+ shutdown
+ duplex auto
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip nat inside source list NAT-Overload interface Ethernet0/0 overload
+ip route 0.0.0.0 0.0.0.0 115.1.1.1
+!
+ip access-list extended NAT-Overload
+ permit ip 10.10.10.0 0.0.0.255 any
+ deny   ip any any
+!
+ipv6 ioam timestamp
+!
+!
+!
+control-plane
+ --More--         !
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+!
+end
+
+R3#

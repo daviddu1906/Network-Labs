@@ -1,0 +1,267 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2026.06.14 16:29:10 =~=~=~=~=~=~=~=~=~=~=~=
+en
+SW1#
+SW1#
+SW1#show runn
+Building configuration...
+
+Current configuration : 1482 bytes
+!
+! Last configuration change at 07:14:39 UTC Sun Jun 14 2026
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname SW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+ --More--         !
+vtp mode transparent
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+!
+vlan 10
+  private-vlan primary
+  private-vlan association 11-12
+!
+vlan 11
+  private-vlan community
+!
+vlan 12
+  private-vlan isolated
+ --More--         !
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Ethernet0/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface Ethernet0/1
+ switchport private-vlan mapping 10 11-12
+ switchport mode private-vlan promiscuous
+ switchport nonegotiate
+ --More--          spanning-tree portfast edge
+!
+interface Ethernet0/2
+ switchport access vlan 12
+ switchport private-vlan host-association 10 12
+ switchport mode private-vlan host
+!
+interface Ethernet0/3
+!
+interface Ethernet1/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface Ethernet1/1
+!
+interface Ethernet1/2
+!
+interface Ethernet1/3
+!
+ip forward-protocol nd
+!
+ip http server
+ --More--         ip http secure-server
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+!
+!
+!
+end
+
+SW1#
+SW1#show run int e0/1
+Building configuration...
+
+Current configuration : 166 bytes
+!
+interface Ethernet0/1
+ switchport private-vlan mapping 10 11-12
+ switchport mode private-vlan promiscuous
+ switchport nonegotiate
+ spanning-tree portfast edge
+end
+
+SW1#show run int e0/2
+Building configuration...
+
+Current configuration : 139 bytes
+!
+interface Ethernet0/2
+ switchport access vlan 12
+ switchport private-vlan host-association 10 12
+ switchport mode private-vlan host
+end
+
+SW1#show int trunk
+
+Port        Mode             Encapsulation  Status        Native vlan
+Et0/0       on               802.1q         trunking      1
+Et1/0       on               802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Et0/0       1-4094
+Et1/0       1-4094
+
+Port        Vlans allowed and active in management domain
+Et0/0       1,10-12
+Et1/0       1,10-12
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Et0/0       1,10-12
+Et1/0       1,10-12
+SW1#show vlan br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Et0/3, Et1/1, Et1/2, Et1/3
+10   VLAN0010                         active    
+11   VLAN0011                         active    
+12   VLAN0012                         active    
+1002 fddi-default                     act/unsup 
+1003 token-ring-default               act/unsup 
+1004 fddinet-default                  act/unsup 
+1005 trnet-default                    act/unsup 
+SW1#show spann
+SW1#show spanning-tree vlan    
+
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     aabb.cc00.1000
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     aabb.cc00.1000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Et0/0               Desg FWD 100       128.1    P2p 
+Et0/3               Desg FWD 100       128.4    P2p 
+Et1/0               Desg FWD 100       128.5    P2p 
+Et1/1               Desg FWD 100       128.6    P2p 
+Et1/2               Desg FWD 100       128.7    P2p 
+Et1/3               Desg FWD 100       128.8    P2p 
+
+
+ --More--         
+VLAN0010
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32778
+             Address     aabb.cc00.1000
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32778  (priority 32768 sys-id-ext 10)
+             Address     aabb.cc00.1000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Et0/0               Desg FWD 100       128.1    P2p 
+Et0/1               Desg FWD 100       128.2    P2p Edge 
+Et0/2               Desg FWD 100       128.3    P2p 
+Et1/0               Desg FWD 100       128.5    P2p 
+
+
+ --More--         
+VLAN0011
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32779
+             Address     aabb.cc00.1000
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32779  (priority 32768 sys-id-ext 11)
+             Address     aabb.cc00.1000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Et0/0               Desg FWD 100       128.1    P2p 
+Et1/0               Desg FWD 100       128.5    P2p 
+
+
+ --More--         
+VLAN0012
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32780
+             Address     aabb.cc00.1000
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32780  (priority 32768 sys-id-ext 12)
+             Address     aabb.cc00.1000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Et0/0               Desg FWD 100       128.1    P2p 
+Et1/0               Desg FWD 100       128.5    P2p 
+
+
+SW1#show his
+  en
+  show runn
+  show run int e0/1
+  show run int e0/2
+  show int trunk
+  show vlan br
+  show spanning-tree 
+  show his
+SW1#
