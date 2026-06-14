@@ -77,11 +77,11 @@ Primary VLAN 10  →  Subnet: 10.10.10.0/24
 hostname R-Internet
 !
 interface Ethernet0/0
- ip address 115.1.1.1 30
+ ip address 115.1.1.1 255.255.255.252
  no shutdown
 !
-! Default route pointing back to R3 (for return traffic)
-ip route 10.10.10.0 255.255.255.0 115.1.1.2
+interface lo 0
+ ip address 8.8.8.8 255.255.255.255
 ```
 
 ---
@@ -93,11 +93,11 @@ hostname R3
 !
 ! Uplink to R-Internet
 interface Ethernet0/0
- ip address 115.1.1.2 30
+ ip address 115.1.1.2 255.255.255.252
  no shutdown
 !
 ! Gateway interface — Promiscuous side
-! R3 acts as the default gateway for all PVLAN hosts
+! R3 acts as the default gateway
 interface Ethernet0/1
  ip address 10.10.10.1 255.255.255.0
  no shutdown
