@@ -177,7 +177,7 @@ Configurations are intended for **lab and educational purposes only**.
 
 | Platform | Link |
 |----------|------|
-| 💼 LinkedIn | [linkedin.com/in/YOUR_PROFILE](https://linkedin.com/in/YOUR_PROFILE) |
+| 💼 LinkedIn | https://www.linkedin.com/in/tan-du-49b9932a1/ |
 | 🐙 GitHub | [github.com/daviddu1906](https://github.com/daviddu1906) |
 | 📧 Email | duphuoctanct@gmail.com |
 
