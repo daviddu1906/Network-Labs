@@ -39,7 +39,7 @@ Each lab includes:
 | 03 | **VTP** | `L2/VTP/` | VTP v1/v2/v3, Server/Client/Transparent/Off, Revision attack | 🔜 Planned |
 | 04 | **DTP** | `L2/DTP/` | Dynamic trunk negotiation, desirable/auto/nonegotiate | 🔜 Planned |
 | 05 | **Trunking** | `L2/Trunking/` | 802.1Q, ISL (legacy), trunk allowed VLAN list | 🔜 Planned |
-| 06 | **STP** | `L2/STP/` | 802.1D, PVST+, Rapid PVST+, MSTP (802.1s), port states | 🔜 Planned |
+| 06 | **STP** | `L2/STP/` | 802.1D, PVST+, RSTP, MSTP (802.1s), port states | 🔜 Planned |
 | 07 | **STP Security** | `L2/STP-Security/` | PortFast, BPDU Guard, BPDU Filter, Root Guard, Loop Guard | 🔜 Planned |
 | 08 | **EtherChannel** | `L2/EtherChannel/` | PAgP, LACP (802.3ad), Static, load-balancing hash | 🔜 Planned |
 | 09 | **Port Security** | `L2/Port-Security/` | MAC limit, sticky MAC, violation modes (shutdown/restrict/protect) | 🔜 Planned |
